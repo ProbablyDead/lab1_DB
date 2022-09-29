@@ -1,5 +1,7 @@
 import os
+import datetime
 from shutil import rmtree
+from shutil import copytree
 
 
 def createDB():
@@ -24,3 +26,30 @@ def deleteDB():
             print("Deleted")
     else:
         print("Not deleted")
+
+
+def createBackup():
+    base = input("Enter database to save: ")
+    try:
+        os.chdir(base)
+    except FileNotFoundError:
+        print(f"No such database '{base}'")
+        return
+
+    os.chdir("..")
+    try:
+        copytree(base, f"Backups/{base}|{datetime.datetime.now().strftime('%d.%m.%Y_%H.%M')}")
+    except FileExistsError:
+        copytree(base, f"Backups/{base}|{datetime.datetime.now().strftime('%d.%m.%Y_%H.%M')}_1")
+
+
+def resetBackup():
+    base = input("Enter backup to reset: ")
+    os.chdir("Backups")
+    try:
+        copytree(base, f"../{base}")
+    except FileExistsError:
+        print(f"File '{base}' already exists")
+
+    os.chdir("..")
+

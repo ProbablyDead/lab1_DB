@@ -38,6 +38,11 @@ def listening():
                     workWithInfo.showStudent()
                 else:
                     workWithInfo.showVariant()
+            elif command == "5":
+                if input("1 - Create\n2 - Reset\n-> ") == "1":
+                    workWithDB.createBackup()
+                else:
+                    workWithDB.resetBackup()
     ###############################
             elif command in ["e", "E"]:
                 print("Bye!")
@@ -57,6 +62,7 @@ def printInfo():
           "\n\t2 - delete ..." +
           "\n\t3 - change ... (obj1 -> obj2)" +
           "\n\t4 - show id ..." +
+          "\n\t5 - backup ..." +
           "\n\tType \'E\' to exit" +
           "\n\tType \'I\' to get info")
 
