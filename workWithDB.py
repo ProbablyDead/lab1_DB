@@ -3,7 +3,7 @@ from shutil import rmtree
 
 
 def createDB():
-    name = input("Input name of data base: ")
+    name = input("Enter name of data base: ")
     os.mkdir(name)
     os.chdir(name)
     open("students_0.txt", "w").close()
@@ -14,7 +14,7 @@ def createDB():
 
 
 def deleteDB():
-    name = input("Input name of data base: ")
+    name = input("Enter name of data base: ")
     if input("Are you sure? - (Y/N) \n-> ") in ["Y", "y"]:
         try:
             rmtree(name)

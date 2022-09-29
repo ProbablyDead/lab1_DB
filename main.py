@@ -7,22 +7,42 @@ def listening():
         try:
             command = input("-> ")
             if command == "1":
-                workWithDB.createDB()
+                v1 = input("1 - Student\n2 - Variant\n3 - Database\n-> ")
+                if v1 == "1":
+                    if input("1 - from console (only 1)\n2 - from file\n-> ") == "1":
+                        workWithInfo.addStudent()
+                    else:
+                        workWithInfo.addStudentsFromFile()
+                elif v1 == "2":
+                    if input("1 - from console (only 1)\n2 - from directory\n-> ") == "1":
+                        workWithInfo.addVariant()
+                    else:
+                        workWithInfo.addVariantsFromDir()
+                elif v1 == "3":
+                    workWithDB.createDB()
             elif command == "2":
-                workWithDB.deleteDB()
+                v2 = input("1 - Student\n2 - Variant\n3 - Database\n-> ")
+                if v2 == "1":
+                    workWithInfo.deleteStudent()
+                elif v2 == "2":
+                    workWithInfo.deleteVariant()
+                elif v2 == "3":
+                    workWithDB.deleteDB()
             elif command == "3":
-                workWithInfo.addStudent()
+                if input("1 - Student\n2 - Variant\n-> ") == "1":
+                    workWithInfo.changeStudent()
+                else:
+                    workWithInfo.changeVariant()
             elif command == "4":
-                workWithInfo.addVariant()
-            elif command == "5":
-                workWithInfo.addStudentsFromFile()
-            elif command == "6":
-                workWithInfo.addVariantsFromFile()
+                if input("1 - Student\n2 - Variant\n-> ") == "1":
+                    workWithInfo.showStudent()
+                else:
+                    workWithInfo.showVariant()
     ###############################
-            elif command == "e":
+            elif command in ["e", "E"]:
                 print("Bye!")
                 break
-            elif command == "i":
+            elif command in ["i", "I"]:
                 printInfo()
             else:
                 print("Wrong command")
@@ -33,14 +53,12 @@ def listening():
 
 def printInfo():
     print("Here the list of commands:" +
-          "\n\t1 - add DB" +
-          "\n\t2 - delete DB" +
-          "\n\t3 - add student" +
-          "\n\t4 - add variant" +
-          "\n\t5 - add students from file" +
-          "\n\t6 - add variants from file" +
-          "\n\tType \'e\' to exit" +
-          "\n\tType \'i\' to get info")
+          "\n\t1 - add ..." +
+          "\n\t2 - delete ..." +
+          "\n\t3 - change ... (obj1 -> obj2)" +
+          "\n\t4 - show id ..." +
+          "\n\tType \'E\' to exit" +
+          "\n\tType \'I\' to get info")
 
 
 if __name__ == '__main__':
