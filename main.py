@@ -1,6 +1,7 @@
 import workWithDB
 import workWithInfo
 import workWithTables
+import GUI
 
 
 def listening():
@@ -52,6 +53,8 @@ def listening():
                 break
             elif command in ["i", "I"]:
                 printInfo()
+            elif not command:
+                pass
             else:
                 print("Wrong command")
         except KeyboardInterrupt:
@@ -73,4 +76,6 @@ def printInfo():
 
 if __name__ == '__main__':
     printInfo()
+    #GUI.start()
     listening()
+

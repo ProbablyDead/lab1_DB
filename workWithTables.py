@@ -1,8 +1,11 @@
 import os
 from random import randint
 
+
 def generateTables():
     base = input("Enter database: ")
+    os.chdir("DataBases")
+
     try:
         os.chdir(base)
     except FileExistsError:
@@ -45,4 +48,5 @@ def generateTables():
 
     tableID.close()
     tableForTeacher.close()
+    os.chdir("..")
     os.chdir("..")
