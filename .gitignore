@@ -2,3 +2,4 @@ venv/
 sources/
 .idea/
 __pycache__/
+.DS_Store

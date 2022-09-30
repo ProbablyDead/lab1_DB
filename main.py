@@ -75,7 +75,7 @@ def printInfo():
 
 
 if __name__ == '__main__':
-    printInfo()
-    #GUI.start()
-    listening()
+    #printInfo()
+    GUI.Home()
+    #listening()
 

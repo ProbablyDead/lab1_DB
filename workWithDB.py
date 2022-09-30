@@ -4,15 +4,9 @@ from shutil import rmtree
 from shutil import copytree
 
 
-def createDB():
-    name = input("Enter name of data base: ")
+def createDB(name):
     os.chdir("DataBases")
-    try:
-        os.mkdir(name)
-    except FileExistsError:
-        print(f"Database '{name}' already exist")
-        return
-
+    os.mkdir(name)
     os.chdir(name)
     open("students_0.txt", "w").close()
     open("variants_0.txt", "w").close()
@@ -22,46 +16,21 @@ def createDB():
     os.chdir("..")
 
 
-def deleteDB():
-    name = input("Enter name of data base: ")
+def deleteDB(name):
     os.chdir("DataBases")
-    if input("Are you sure? - (Y/N) \n-> ") in ["Y", "y"]:
-        try:
-            rmtree(name)
-        except FileNotFoundError:
-            print(f"No such file or directory: '{name}'")
-        else:
-            print("Deleted")
-    else:
-        print("Not deleted")
+    rmtree(name)
     os.chdir("..")
 
 
-def createBackup():
-    base = input("Enter database to save: ")
-    os.chdir("DataBases")
-    try:
-        os.chdir(base)
-    except FileNotFoundError:
-        print(f"No such database '{base}'")
-        return
-
-    os.chdir("..")
-    os.chdir("..")
-
+def createBackup(base):
     try:
         copytree(f"DataBases/{base}", f"Backups/{base}|{datetime.datetime.now().strftime('%d.%m.%Y_%H.%M')}")
     except FileExistsError:
         copytree(f"DataBases/{base}", f"Backups/{base}|{datetime.datetime.now().strftime('%d.%m.%Y_%H.%M')}_1")
 
 
-def resetBackup():
-    base = input("Enter backup to reset: ")
+def resetBackup(base):
     os.chdir("Backups")
-    try:
-        copytree(base, f"../DataBases/{base}")
-    except FileNotFoundError:
-        print(f"No such backup '{base}'")
-
+    copytree(base, f"../DataBases/{base}")
     os.chdir("..")
 
