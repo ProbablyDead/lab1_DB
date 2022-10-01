@@ -1,7 +1,7 @@
 # HSE_DS_LAB1
 ## HOMEPAGE:
 
-![img_3.png](readmeData/img_3.png)
+![img.png](readmeData/img8.png)
 
 ### Work with several databases...
 
@@ -23,11 +23,11 @@
 
 ![img_4.png](readmeData/img_4.png)
 
-### ...backups...
+### ...provide you with backups...
 
 ![img.png](readmeData/img0.png)
 
-### ...and provide you with the best generation!
+### ...and the best generations!
 
 ![img_5.png](readmeData/img_5_2.png)
 
