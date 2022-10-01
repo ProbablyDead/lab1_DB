@@ -164,22 +164,126 @@ def openBase(base):
         but.grid(column=1, row=0)
 
     def OBR_deleteStudent():
-        pass
+        def func():
+            name = que.get()
+            win.destroy()
+            if deleteStudent(name, base) == "1":
+                messagebox.showerror("Error", f"No such student '{name}' in database")
+                return
+            update()
+
+        win = Tk()
+        win.title("Enter student's name")
+        que = Entry(win, width=40)
+        que.grid()
+        que.focus()
+        but = Button(win, text="Ok", command=func)
+        but.grid(column=1, row=0)
 
     def OBR_deleteVariant():
-        pass
+        def func():
+            name = que.get()
+            win.destroy()
+            if deleteVariant(name, base) == "1":
+                messagebox.showerror("Error", f"No such variant '{name}' in database")
+                return
+            update()
+
+        win = Tk()
+        win.title("Enter variant's name")
+        que = Entry(win, width=40)
+        que.grid()
+        que.focus()
+        but = Button(win, text="Ok", command=func)
+        but.grid(column=1, row=0)
 
     def OBR_changeStudent():
-        pass
+        def func():
+            name1 = que1.get()
+            name2 = que2.get()
+            win.destroy()
+            rez = changeStudent(name1, name2, base)
+            if rez == "1":
+                messagebox.showerror("Error", f"No such student '{name1}' in database")
+                return
+            elif rez == "2":
+                messagebox.showerror("Error", f"There already is such student '{name2}' in database")
+                return
+            update()
+
+        win = Tk()
+        win.title("Enter students' names")
+        que1 = Entry(win, width=40)
+        que1.grid()
+        que1.focus()
+        que2 = Entry(win, width=40)
+        que2.grid()
+        but = Button(win, text="Ok", command=func)
+        but.grid(column=1, row=0)
 
     def OBR_changeVariant():
-        pass
+        def func():
+            name1 = que1.get()
+            name2 = que2.get()
+            win.destroy()
+            rez = changeVariant(name1, name2, base)
+            if rez == "1":
+                messagebox.showerror("Error", f"No such variant '{name1}' in database")
+                return
+            elif rez == "2":
+                messagebox.showerror("Error", f"There already is such variant '{name2}' in database")
+                return
+            update()
+
+        win = Tk()
+        win.title("Enter variants' names")
+        que1 = Entry(win, width=40)
+        que1.grid()
+        que1.focus()
+        que2 = Entry(win, width=40)
+        que2.grid()
+        but = Button(win, text="Ok", command=func)
+        but.grid(column=1, row=0)
 
     def OBR_showStudent():
-        pass
+        def func():
+            ide = que.get()
+            win.destroy()
+            rez = showStudent(ide, base)
+            if rez == "!":
+                messagebox.showerror("Error", f"No such student's id '{ide}' in database")
+                return
+            else:
+                messagebox.showinfo("Student", f"{ide} - {rez}")
+            update()
+
+        win = Tk()
+        win.title("Enter student's id")
+        que = Entry(win, width=40)
+        que.grid()
+        que.focus()
+        but = Button(win, text="Ok", command=func)
+        but.grid(column=1, row=0)
 
     def OBR_showVariant():
-        pass
+        def func():
+            ide = que.get()
+            win.destroy()
+            rez = showVariant(ide, base)
+            if rez == "!":
+                messagebox.showerror("Error", f"No such variant's id '{ide}' in database")
+                return
+            else:
+                messagebox.showinfo("Variant", f"{ide} - {rez}")
+            update()
+
+        win = Tk()
+        win.title("Enter variant's id")
+        que = Entry(win, width=40)
+        que.grid()
+        que.focus()
+        but = Button(win, text="Ok", command=func)
+        but.grid(column=1, row=0)
 
     ###### MENU
 
