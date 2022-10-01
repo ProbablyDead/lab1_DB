@@ -1,15 +1,8 @@
 import os
 
 
-def addStudent():
-    name = input("Enter student's full name: ")
-    db = input("Enter database: ")
-    os.chdir("DataBases")
-    try:
-        os.chdir(db)
-    except FileNotFoundError:
-        print("No such database")
-        return
+def addStudent(name, db):
+    os.chdir(f"DataBases/{db}")
 
     table = ""
     table2 = ""
@@ -29,8 +22,12 @@ def addStudent():
         while str(num) in text:
             num += 1
 
-    if name in table2.read():
-        print(f"Student '{name}' already is")
+    if name in text:
+        table.close()
+        table2.close()
+        os.chdir("..")
+        os.chdir("..")
+        return "1"
     else:
         table.write(f"{num}-{name}\n")
         os.rename(f"students_{i}.txt", f"students_{i + 1}.txt")
@@ -41,16 +38,8 @@ def addStudent():
     os.chdir("..")
 
 
-def addVariant():
-    name = input("Enter variant's name: ")
-    db = input("Enter database: ")
-    os.chdir("DataBases")
-
-    try:
-        os.chdir(db)
-    except FileNotFoundError:
-        print("No such database")
-        return
+def addVariant(name, db):
+    os.chdir(f"DataBases/{db}")
 
     table = ""
     table2 = ""
@@ -71,8 +60,12 @@ def addVariant():
             num += 1
 
 
-    if name in table2.read():
-        print(f"Variant '{name}' already in database")
+    if name in text:
+        table2.close()
+        table.close()
+        os.chdir("..")
+        os.chdir("..")
+        return "1"
     else:
         table.write(f"{num}-{name}\n")
         os.rename(f"variants_{i}.txt", f"variants_{i + 1}.txt")
@@ -83,21 +76,13 @@ def addVariant():
     os.chdir("..")
 
 
-def addStudentsFromFile():
-    filename = input("Enter path to file with students name: ")
-    base = input("Enter name of database: ")
+def addStudentsFromFile(filename, base):
     try:
         students = open(filename, "rt")
     except FileNotFoundError:
-        print(f"No such file: '{filename}'")
-        return
-    os.chdir("DataBases")
+        return "1"
 
-    try:
-        os.chdir(base)
-    except FileNotFoundError:
-        print(f"No such database: '{base}'")
-        return
+    os.chdir(f"DataBases/{base}")
 
     table = ""
     table2 = ""
@@ -116,7 +101,7 @@ def addStudentsFromFile():
     for line in students.readlines():
         if line != "\n":
             if line in lns:
-                print(f"Student '{line[:len(line)-1]}' already in database")
+                pass
             else:
                 num = i
                 if str(num) in lns:
@@ -134,24 +119,16 @@ def addStudentsFromFile():
     table2.close()
 
 
-def addVariantsFromDir():
-    dirname = input("Enter path to directory with variants: ")
-    base = input("Enter name of database: ")
+def addVariantsFromDir(dirname, base):
     try:
         variants = os.listdir(dirname)
     except FileNotFoundError:
-        print(f"No such directory: '{dirname}'")
-        return
+        return "1"
     except NotADirectoryError:
-        print(f"Not a directory: '{dirname}'")
-        return
+        return "1"
 
-    os.chdir("DataBases")
-    try:
-        os.chdir(base)
-    except FileNotFoundError:
-        print(f"No such database: '{base}'")
-        return
+    os.chdir(f"DataBases/{base}")
+
 
     i = 0
     table = ""

@@ -2,8 +2,8 @@ from tkinter import *
 from tkinter import messagebox
 from tkinter.ttk import Combobox
 from tkinter import scrolledtext
-import workWithDB
 from workWithTables import *
+from workWithInfo import *
 from workWithDB import *
 from os import listdir
 
@@ -96,16 +96,72 @@ def openBase(base):
     ###### DEFENITIONS
 
     def OBR_addStudent():
-        pass
+        def func():
+            name = que.get()
+            win.destroy()
+            if addStudent(name, base) == "1":
+                messagebox.showerror("Error", f"Student '{name}' already in database")
+                return
+            update()
+
+        win = Tk()
+        win.title("Enter student's name")
+        que = Entry(win, width=40)
+        que.grid()
+        que.focus()
+        but = Button(win, text="Ok", command=func)
+        but.grid(column=1, row=0)
 
     def OBR_addStudentsFromFile():
-        pass
+        def func():
+            name = que.get()
+            win.destroy()
+            if addStudentsFromFile(name, base) == "1":
+                messagebox.showerror("Error", f"Can't open a file '{name}'")
+                return
+            update()
+
+        win = Tk()
+        win.title("Enter the path to the file with student's name")
+        que = Entry(win, width=50)
+        que.grid()
+        que.focus()
+        but = Button(win, text="Ok", command=func)
+        but.grid(column=1, row=0)
 
     def OBR_addVariant():
-        pass
+        def func():
+            name = que.get()
+            win.destroy()
+            if addVariant(name, base) == "1":
+                messagebox.showerror("Error", f"Variant '{name}' already in database")
+                return
+            update()
+
+        win = Tk()
+        win.title("Enter variant's name")
+        que = Entry(win, width=40)
+        que.grid()
+        que.focus()
+        but = Button(win, text="Ok", command=func)
+        but.grid(column=1, row=0)
 
     def OBR_addVariantsFromDirectory():
-        pass
+        def func():
+            name = que.get()
+            win.destroy()
+            if addVariantsFromDir(name, base) == "1":
+                messagebox.showerror("Error", f"Can't find a directory '{name}'")
+                return
+            update()
+
+        win = Tk()
+        win.title("Enter the path to directory with variants")
+        que = Entry(win, width=50)
+        que.grid()
+        que.focus()
+        but = Button(win, text="Ok", command=func)
+        but.grid(column=1, row=0)
 
     def OBR_deleteStudent():
         pass
@@ -194,7 +250,7 @@ def Home():
             messagebox.showerror("Error", f"Database '{auf}' already exist")
             enterAdd.delete(0, END)
             return
-        workWithDB.createDB(auf)
+        createDB(auf)
         update()
 
     txt1 = Label(window, text="Add Database: ", font=font, bg="gray", fg="black")
@@ -217,7 +273,7 @@ def Home():
                 messagebox.showerror("Error", f"There is no such database '{auf}'")
                 update()
                 return
-            workWithDB.deleteDB(auf)
+            deleteDB(auf)
             update()
 
     txt2 = Label(window, text="Delete Database: ", font=font, bg="gray", fg="black")
@@ -274,7 +330,7 @@ def Home():
             messagebox.showerror("Error", f"There is no such database '{bku}'")
             update()
             return
-        workWithDB.createBackup(bku)
+        createBackup(bku)
         update()
 
     txt4 = Label(window, text="Create backup: ", font=font, bg="gray", fg="black")
@@ -303,7 +359,7 @@ def Home():
             messagebox.showerror("Error", f"There is no such backup '{rbku}'")
             update()
             return
-        workWithDB.resetBackup(rbku)
+        resetBackup(rbku)
         update()
 
     txt5 = Label(window, text="Reset backup: ", font=font, bg="gray", fg="black")
