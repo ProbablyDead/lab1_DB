@@ -93,6 +93,79 @@ def openBase(base):
 
     tf.close()
 
+    ###### DEFENITIONS
+
+    def OBR_addStudent():
+        pass
+
+    def OBR_addStudentsFromFile():
+        pass
+
+    def OBR_addVariant():
+        pass
+
+    def OBR_addVariantsFromDirectory():
+        pass
+
+    def OBR_deleteStudent():
+        pass
+
+    def OBR_deleteVariant():
+        pass
+
+    def OBR_changeStudent():
+        pass
+
+    def OBR_changeVariant():
+        pass
+
+    def OBR_showStudent():
+        pass
+
+    def OBR_showVariant():
+        pass
+
+    ###### MENU
+
+    mainmenu = Menu(window)
+
+    # ADD
+
+    add = Menu(mainmenu)
+    whichStud = Menu(add)
+    whichStud.add_command(label="By one", command=OBR_addStudent)
+    whichStud.add_command(label="From file", command=OBR_addStudentsFromFile)
+    add.add_cascade(label='Student', menu=whichStud)
+    whichVar = Menu(add)
+    whichVar.add_command(label="By one", command=OBR_addVariant)
+    whichVar.add_command(label="From directory", command=OBR_addVariantsFromDirectory)
+    add.add_cascade(label='Variant', menu=whichVar)
+
+    mainmenu.add_cascade(label="Add", menu=add)
+
+    # DELETE
+
+    deleteS = Menu(mainmenu)
+    deleteS.add_command(label='Student', command=OBR_deleteStudent)
+    deleteS.add_command(label='Variant', command=OBR_deleteVariant)
+    mainmenu.add_cascade(label='Delete', menu=deleteS)
+
+    # CHANGE
+
+    change = Menu(mainmenu)
+    change.add_command(label='Student', command=OBR_changeStudent)
+    change.add_command(label='Variant', command=OBR_changeVariant)
+    mainmenu.add_cascade(label='Change', menu=change)
+
+    # SHOW
+
+    show = Menu(mainmenu)
+    show.add_command(label='Student', command=OBR_showStudent)
+    show.add_command(label='Variant', command=OBR_showVariant)
+    mainmenu.add_cascade(label='Show by ID', menu=show)
+
+    window.config(menu=mainmenu)
+
     window.mainloop()
 
 
@@ -172,7 +245,7 @@ def Home():
             messagebox.showerror("Error", f"There is no such database '{base}'")
             update()
             return
-        #window.destroy()
+        # window.destroy()
         openBase(base)
 
     txt3 = Label(window, text="Choose Database: ", font=font, bg="gray", fg="black")
