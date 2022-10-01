@@ -1,15 +1,8 @@
 import os
 
 
-def addStudent():
-    name = input("Enter student's full name: ")
-    db = input("Enter database: ")
-    os.chdir("DataBases")
-    try:
-        os.chdir(db)
-    except FileNotFoundError:
-        print("No such database")
-        return
+def addStudent(name, db):
+    os.chdir(f"DataBases/{db}")
 
     table = ""
     table2 = ""
@@ -29,8 +22,12 @@ def addStudent():
         while str(num) in text:
             num += 1
 
-    if name in table2.read():
-        print(f"Student '{name}' already is")
+    if name in text:
+        table.close()
+        table2.close()
+        os.chdir("..")
+        os.chdir("..")
+        return "1"
     else:
         table.write(f"{num}-{name}\n")
         os.rename(f"students_{i}.txt", f"students_{i + 1}.txt")
@@ -41,16 +38,8 @@ def addStudent():
     os.chdir("..")
 
 
-def addVariant():
-    name = input("Enter variant's name: ")
-    db = input("Enter database: ")
-    os.chdir("DataBases")
-
-    try:
-        os.chdir(db)
-    except FileNotFoundError:
-        print("No such database")
-        return
+def addVariant(name, db):
+    os.chdir(f"DataBases/{db}")
 
     table = ""
     table2 = ""
@@ -71,8 +60,12 @@ def addVariant():
             num += 1
 
 
-    if name in table2.read():
-        print(f"Variant '{name}' already in database")
+    if name in text:
+        table2.close()
+        table.close()
+        os.chdir("..")
+        os.chdir("..")
+        return "1"
     else:
         table.write(f"{num}-{name}\n")
         os.rename(f"variants_{i}.txt", f"variants_{i + 1}.txt")
@@ -83,21 +76,13 @@ def addVariant():
     os.chdir("..")
 
 
-def addStudentsFromFile():
-    filename = input("Enter path to file with students name: ")
-    base = input("Enter name of database: ")
+def addStudentsFromFile(filename, base):
     try:
         students = open(filename, "rt")
     except FileNotFoundError:
-        print(f"No such file: '{filename}'")
-        return
-    os.chdir("DataBases")
+        return "1"
 
-    try:
-        os.chdir(base)
-    except FileNotFoundError:
-        print(f"No such database: '{base}'")
-        return
+    os.chdir(f"DataBases/{base}")
 
     table = ""
     table2 = ""
@@ -116,7 +101,7 @@ def addStudentsFromFile():
     for line in students.readlines():
         if line != "\n":
             if line in lns:
-                print(f"Student '{line[:len(line)-1]}' already in database")
+                pass
             else:
                 num = i
                 if str(num) in lns:
@@ -134,24 +119,16 @@ def addStudentsFromFile():
     table2.close()
 
 
-def addVariantsFromDir():
-    dirname = input("Enter path to directory with variants: ")
-    base = input("Enter name of database: ")
+def addVariantsFromDir(dirname, base):
     try:
         variants = os.listdir(dirname)
     except FileNotFoundError:
-        print(f"No such directory: '{dirname}'")
-        return
+        return "1"
     except NotADirectoryError:
-        print(f"Not a directory: '{dirname}'")
-        return
+        return "1"
 
-    os.chdir("DataBases")
-    try:
-        os.chdir(base)
-    except FileNotFoundError:
-        print(f"No such database: '{base}'")
-        return
+    os.chdir(f"DataBases/{base}")
+
 
     i = 0
     table = ""
@@ -185,16 +162,8 @@ def addVariantsFromDir():
     table.close()
 
 
-def deleteStudent():
-    name = input("Enter student's fullname: ")
-    db = input("Enter database: ")
-    os.chdir("DataBases")
-
-    try:
-        os.chdir(db)
-    except FileNotFoundError:
-        print(f"No such database '{db}'")
-        return
+def deleteStudent(name, db):
+    os.chdir(f"DataBases/{db}")
 
     table = ""
     i = 0
@@ -213,17 +182,15 @@ def deleteStudent():
     for line in buf:
         if name in line:
             buf.pop(g)
-            print("Deleted")
             f = 1
             break
         g += 1
     table.close()
 
     if f == 0:
-        print(f"No such student '{name}'")
         os.chdir("..")
         os.chdir("..")
-        return
+        return "1"
 
     table = open(filename, "wt")
 
@@ -235,16 +202,8 @@ def deleteStudent():
     os.chdir("..")
 
 
-def deleteVariant():
-    name = input("Enter variant's name: ")
-    db = input("Enter database: ")
-    os.chdir("DataBases")
-
-    try:
-        os.chdir(db)
-    except FileNotFoundError:
-        print(f"No such database '{db}'")
-        return
+def deleteVariant(name, db):
+    os.chdir(f"DataBases/{db}")
 
     table = ""
     i = 0
@@ -263,17 +222,15 @@ def deleteVariant():
     for line in buf:
         if name in line:
             buf.pop(g)
-            print("Deleted")
             f = 1
             break
         g += 1
     table.close()
 
     if f == 0:
-        print(f"No such variant '{name}'")
         os.chdir("..")
         os.chdir("..")
-        return
+        return "1"
 
     table = open(filename, "wt")
 
@@ -285,17 +242,8 @@ def deleteVariant():
     os.chdir("..")
 
 
-def changeStudent():
-    name1 = input("Enter the name of student you want to change: ")
-    name2 = input("Enter a new name: ")
-    base = input("Enter database: ")
-    os.chdir("DataBases")
-
-    try:
-        os.chdir(base)
-    except FileNotFoundError:
-        print(f"No such database '{base}'")
-        return
+def changeStudent(name1, name2, base):
+    os.chdir(f"DataBases/{base}")
 
     table = ""
     filename = ""
@@ -309,18 +257,16 @@ def changeStudent():
     ttt = table.read()
 
     if ttt.find(name1) == -1:
-        print(f"No such student '{name1}'")
         table.close()
         os.chdir("..")
         os.chdir("..")
-        return
+        return "1"
 
     if ttt.find(name2) != -1:
-        print(f"Student '{name2}' already is")
         table.close()
         os.chdir("..")
         os.chdir("..")
-        return
+        return "2"
 
     buf = ttt.replace(name1, name2, 1)
     table.close()
@@ -333,17 +279,8 @@ def changeStudent():
     os.chdir("..")
 
 
-def changeVariant():
-    name1 = input("Enter the name of variant you want to change: ")
-    name2 = input("Enter a new name: ")
-    base = input("Enter database: ")
-    os.chdir("DataBases")
-
-    try:
-        os.chdir(base)
-    except FileNotFoundError:
-        print(f"No such database '{base}'")
-        return
+def changeVariant(name1, name2, base):
+    os.chdir(f"DataBases/{base}")
 
     table = ""
     filename = ""
@@ -357,18 +294,16 @@ def changeVariant():
     ttt = table.read()
 
     if ttt.find(name1) == -1:
-        print(f"No such variant '{name1}'")
         table.close()
         os.chdir("..")
         os.chdir("..")
-        return
+        return "1"
 
     if ttt.find(name2) != -1:
-        print(f"Variant '{name2}' already is")
         table.close()
         os.chdir("..")
         os.chdir("..")
-        return
+        return "2"
 
     buf = ttt.replace(name1, name2, 1)
     table.close()
@@ -381,16 +316,8 @@ def changeVariant():
     os.chdir("..")
 
 
-def showStudent():
-    ide = input("Enter id: ")
-    base = input("Enter database: ")
-    os.chdir("DataBases")
-
-    try:
-        os.chdir(base)
-    except FileNotFoundError:
-        print(f"No such database '{base}'")
-        return
+def showStudent(ide, base):
+    os.chdir(f"DataBases/{base}")
 
     table = ""
 
@@ -404,28 +331,21 @@ def showStudent():
     f = 0
     for line in buf:
         if ide in line:
-            print(line[(line.find("-")+1):-1])
-            f = 1
-            break
+            os.chdir("..")
+            os.chdir("..")
+            return line[(line.find("-")+1):-1]
 
     if f == 0:
-        print(f"No such id '{ide}'")
-        return
+        os.chdir("..")
+        os.chdir("..")
+        return "!"
 
     os.chdir("..")
     os.chdir("..")
 
 
-def showVariant():
-    ide = input("Enter id: ")
-    base = input("Enter database: ")
-    os.chdir("DataBases")
-
-    try:
-        os.chdir(base)
-    except FileNotFoundError:
-        print(f"No such database '{base}'")
-        return
+def showVariant(ide, base):
+    os.chdir(f"DataBases/{base}")
 
     table = ""
 
@@ -439,13 +359,14 @@ def showVariant():
     f = 0
     for line in buf:
         if ide in line:
-            print(line[(line.find("-") + 1):-1])
-            f = 1
-            break
+            os.chdir("..")
+            os.chdir("..")
+            return line[(line.find("-") + 1):-1]
 
     if f == 0:
-        print(f"No such id '{ide}'")
-        return
+        os.chdir("..")
+        os.chdir("..")
+        return "!"
 
     os.chdir("..")
     os.chdir("..")
