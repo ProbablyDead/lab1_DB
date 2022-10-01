@@ -1,18 +1,102 @@
 from tkinter import *
 from tkinter import messagebox
 from tkinter.ttk import Combobox
-
+from tkinter import scrolledtext
 import workWithDB
 from workWithTables import *
 from workWithDB import *
 from os import listdir
 
+
 def openBase(base):
-    pass
+    path = f"DataBases/{base}"
+    window = Tk()
+    window.title(base)
+    window.config(bg="gray35")
+    window.geometry('%dx%d+%d+%d' % (window.winfo_screenwidth(), window.winfo_screenheight(), 0, 0))
+
+    def update():
+        window.destroy()
+        openBase(base)
+
+    def generateTables_OBR():
+        generateTables(base)
+        update()
+
+    # STUDENTS
+
+    Label(window, text="ID-Student", font=("Arial Bold", 17), bg="gray35", fg="red").place(x=150, y=2)
+
+    students = scrolledtext.ScrolledText(window, width=50, height=61, bg="gray")
+    stf = ""
+    for line in os.listdir(path):
+        if line[0] == "s":
+            stf = open(f"{path}/{line}", "rt")
+
+    students.insert(INSERT, stf.read())
+    students.place(x=10, y=30)
+    students.config(state="disabled")
+
+    stf.close()
+
+    # VARIANTS
+
+    Label(window, text="ID-Variant", font=("Arial Bold", 17), bg="gray35", fg="red").place(x=470, y=2)
+
+    variants = scrolledtext.ScrolledText(window, width=30, height=61, bg="gray")
+    vaf = ""
+    for line in os.listdir(path):
+        if line[0] == "v":
+            vaf = open(f"{path}/{line}", "rt")
+
+    variants.insert(INSERT, vaf.read())
+    variants.place(x=400, y=30)
+    variants.config(state="disabled")
+
+    vaf.close()
+
+    # GENERATE BUTTON
+
+    generate = Button(window, text="Generate", command=generateTables_OBR, bg="gray35", borderwidth=3,
+                      height=5, width=10, font=("Arial Bold", 17), fg="red")
+    generate.place(relx=0.5, rely=0.5, anchor=CENTER)
+
+    # CLOSE BUTTON
+
+    home = Button(window, text="Close", command=window.destroy, bg="gray35", borderwidth=3,
+                  height=5, width=10, font=("Arial Bold", 17))
+    home.place(relx=0.5, rely=0.9 + 0.011, anchor='center')
+
+    # IDES
+
+    Label(window, text="ID(stud)-ID(var)", font=("Arial Bold", 17), bg="gray35", fg="red").place(x=855, y=2)
+
+    ides = scrolledtext.ScrolledText(window, width=30, height=61, bg="gray")
+    idf = open(f"{path}/generatedTable.txt", "rt")
+
+    ides.insert(INSERT, idf.read())
+    ides.place(x=805, y=30)
+    ides.config(state="disabled")
+
+    idf.close()
+
+    # FOR TEACHER
+
+    Label(window, text="Student-Variant", font=("Arial Bold", 17), bg="gray35", fg="red").place(x=1170, y=2)
+
+    fort = scrolledtext.ScrolledText(window, width=50, height=61, bg="gray")
+    tf = open(f"{path}/generatedTableForTeacher.txt", "rt")
+
+    fort.insert(INSERT, tf.read())
+    fort.place(x=1055, y=30)
+    fort.config(state="disabled")
+
+    tf.close()
+
+    window.mainloop()
 
 
 def Home():
-
     # MAIN
 
     window = Tk()
@@ -88,8 +172,8 @@ def Home():
             messagebox.showerror("Error", f"There is no such database '{base}'")
             update()
             return
+        #window.destroy()
         openBase(base)
-        update()
 
     txt3 = Label(window, text="Choose Database: ", font=font, bg="gray", fg="black")
     txt3.place(x=10, y=92)

@@ -77,5 +77,6 @@ def printInfo():
 if __name__ == '__main__':
     #printInfo()
     GUI.Home()
+    #GUI.openBase("DATA2")
     #listening()
 

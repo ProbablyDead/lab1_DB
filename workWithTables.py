@@ -2,8 +2,7 @@ import os
 from random import randint
 
 
-def generateTables():
-    base = input("Enter database: ")
+def generateTables(base):
     os.chdir("DataBases")
 
     try:
